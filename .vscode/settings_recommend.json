@@ -9,6 +9,6 @@
     },
     "clangd.path": "/usr/bin/clangd-16",
     "terminal.integrated.env.linux": {
-        //
+        "PATH": "${workspaceFolder}/build/bin:${env:PATH}",
     },
 }
