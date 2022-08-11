@@ -11,6 +11,17 @@
 
 #include "mlir/IR/Dialect.h"
 
-#include "Standalone/StandaloneOpsDialect.h.inc"
+#include "Standalone/StandaloneDialect.h.inc"
+
+namespace mlir {
+namespace standalone {
+namespace Standalone {
+
+// Print a type registered to this dialect.
+void printStandaloneDialectType(Type type, AsmPrinter &printer);
+
+} // namespace Standalone
+} // namespace standalone
+} // namespace mlir
 
 #endif // STANDALONE_STANDALONEDIALECT_H

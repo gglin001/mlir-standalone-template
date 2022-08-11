@@ -10,6 +10,7 @@
 #define STANDALONE_OPS
 
 include "StandaloneDialect.td"
+include "StandaloneTypes.td"
 include "/mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 

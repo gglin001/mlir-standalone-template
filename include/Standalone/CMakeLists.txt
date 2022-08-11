@@ -1,3 +1,11 @@
-add_mlir_dialect(StandaloneOps standalone)
+set(LLVM_TARGET_DEFINITIONS StandaloneOps.td)
+mlir_tablegen(StandaloneOps.h.inc -gen-op-decls)
+mlir_tablegen(StandaloneOps.cpp.inc -gen-op-defs)
+mlir_tablegen(StandaloneDialect.h.inc -gen-dialect-decls -dialect=standalone)
+mlir_tablegen(StandaloneDialect.cpp.inc -gen-dialect-defs -dialect=standalone)
+mlir_tablegen(StandaloneTypes.h.inc -gen-typedef-decls)
+mlir_tablegen(StandaloneTypes.cpp.inc -gen-typedef-defs)
+add_public_tablegen_target(MLIRStandaloneOpsIncGen)
+
 add_mlir_doc(StandaloneDialect StandaloneDialect Standalone/ -gen-dialect-doc)
 add_mlir_doc(StandaloneOps StandaloneOps Standalone/ -gen-op-doc)
