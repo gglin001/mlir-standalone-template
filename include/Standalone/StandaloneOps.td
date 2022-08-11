@@ -41,4 +41,22 @@ def Standalone_FooOp : Standalone_Op<"foo", [NoSideEffect,
     }];
 }
 
+def Standalone_BarOp : Standalone_Op<"foo2", [NoSideEffect,
+                                             SameOperandsAndResultType]> {
+    let summary = "Illustrates how to define an operation.";
+    let description = [{
+        ```mlir
+            func.func @bar(%arg0: !standalone.int) {
+                %res = standalone.foo2 %arg0 : !standalone.int
+                return
+            }
+        ```
+    }];
+    let arguments = (ins Standalone_IntType:$input);
+    let results = (outs Standalone_IntType:$res);
+    let assemblyFormat = [{
+        $input attr-dict `:` type($input)
+    }];
+}
+
 #endif // STANDALONE_OPS
