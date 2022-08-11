@@ -41,21 +41,38 @@ def Standalone_FooOp : Standalone_Op<"foo", [NoSideEffect,
     }];
 }
 
-def Standalone_BarOp : Standalone_Op<"foo2", [NoSideEffect,
+def Standalone_Foo2Op : Standalone_Op<"foo2", [NoSideEffect,
                                              SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
     let description = [{
         ```mlir
-            func.func @bar(%arg0: !standalone.int) {
-                %res = standalone.foo2 %arg0 : !standalone.int
-                return
-            }
+        func.func @bar(%arg0: !standalone.int) {
+            %res = standalone.foo2 %arg0 : !standalone.int
+            return
+        }
         ```
     }];
     let arguments = (ins Standalone_IntType:$input);
     let results = (outs Standalone_IntType:$res);
     let assemblyFormat = [{
         $input attr-dict `:` type($input)
+    }];
+}
+
+def Standalone_AddOp : Standalone_Op<"add", [NoSideEffect]> {
+    let summary = "Illustrates how to define an operation.";
+    let description = [{
+        ```mlir
+        func.func @bar(%arg0: !standalone.int, %arg1: !standalone.int) {
+            %res = standalone.add %arg0 %arg0 : (!standalone.int, !standalone.int) -> !standalone.int
+            return
+        }
+        ```
+    }];
+    let arguments = (ins Standalone_IntType:$x, Standalone_IntType:$y);
+    let results = (outs Standalone_IntType:$res);
+    let assemblyFormat = [{
+        $x $y attr-dict `:` functional-type(operands, results)
     }];
 }
 
