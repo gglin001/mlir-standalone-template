@@ -15,7 +15,6 @@
 
 using namespace mlir;
 using namespace mlir::standalone;
-using namespace mlir::standalone::Standalone;
 
 #include "Standalone/StandaloneDialect.cpp.inc"
 
@@ -25,37 +24,6 @@ using namespace mlir::standalone::Standalone;
 
 #define GET_TYPEDEF_CLASSES
 #include "Standalone/StandaloneTypes.cpp.inc"
-
-Type Standalone::parseStandaloneDialectType(AsmParser &parser) {
-  SMLoc const typeLoc = parser.getCurrentLocation();
-  StringRef mnemonic;
-  Type genType;
-  auto parseResult = generatedTypeParser(parser, &mnemonic, genType);
-  if (parseResult.has_value())
-    return genType;
-  parser.emitError(typeLoc) << "unknown  type `" << mnemonic << "` in dialect `"
-                            << StandaloneDialect::getDialectNamespace() << "`";
-  return {};
-}
-
-void Standalone::printStandaloneDialectType(Type type, AsmPrinter &printer) {
-  if (succeeded(generatedTypePrinter(type, printer)))
-    return;
-}
-
-//===----------------------------------------------------------------------===//
-// Standalone dialect parseType/printType methods.
-//===----------------------------------------------------------------------===//
-
-// Parse a type registered to this dialect.
-Type StandaloneDialect::parseType(DialectAsmParser &parser) const {
-  return parseStandaloneDialectType(parser);
-}
-
-// Print a type registered to this dialect.
-void StandaloneDialect::printType(Type type, DialectAsmPrinter &printer) const {
-  printStandaloneDialectType(type, printer);
-}
 
 //===----------------------------------------------------------------------===//
 // Dialect initialize method.

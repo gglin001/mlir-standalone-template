@@ -15,15 +15,8 @@
 
 namespace mlir {
 namespace standalone {
-namespace Standalone {
-
-// Parse a type registered to this dialect.
-Type parseStandaloneDialectType(AsmParser &parser);
-
-// Print a type registered to this dialect.
-void printStandaloneDialectType(Type type, AsmPrinter &printer);
-
-} // namespace Standalone
+//
+//
 } // namespace standalone
 } // namespace mlir
 
