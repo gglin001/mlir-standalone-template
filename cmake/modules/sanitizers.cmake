@@ -19,130 +19,137 @@
 #
 
 set(USE_SANITIZER
-        ""
-        CACHE
-        STRING
-        "Compile with a sanitizer. Options are: Address, Memory, MemoryWithOrigins, Undefined, Thread, Leak, 'Address;Undefined'"
-        )
+    ""
+    CACHE
+      STRING
+      "Compile with a sanitizer. Options are: Address, Memory, MemoryWithOrigins, Undefined, Thread, Leak, 'Address;Undefined'"
+)
 
 function(append value)
-    foreach (variable ${ARGN})
-        set(${variable}
-                "${${variable}} ${value}"
-                PARENT_SCOPE)
-    endforeach (variable)
+  foreach(variable ${ARGN})
+    set(${variable}
+        "${${variable}} ${value}"
+        PARENT_SCOPE)
+  endforeach(variable)
 endfunction()
 
-if (USE_SANITIZER)
-    append("-fno-omit-frame-pointer"
-            CMAKE_C_FLAGS
-            CMAKE_CXX_FLAGS)
+if(USE_SANITIZER)
+  append("-fno-omit-frame-pointer" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
 
-    if (UNIX)
+  if(UNIX)
 
-        if (uppercase_CMAKE_BUILD_TYPE STREQUAL "DEBUG")
-            append("-O1" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
-        endif ()
+    if(uppercase_CMAKE_BUILD_TYPE STREQUAL "DEBUG")
+      append("-O1" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
+    endif()
 
-        if (USE_SANITIZER MATCHES "([Aa]ddress);([Uu]ndefined)"
-                OR USE_SANITIZER MATCHES "([Uu]ndefined);([Aa]ddress)")
-            message(STATUS "Building with Address, Undefined sanitizers")
-            append("-fsanitize=address,undefined"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-        elseif (USE_SANITIZER MATCHES "([Aa]ddress)")
-            # Optional: -fno-optimize-sibling-calls -fsanitize-address-use-after-scope
-            message(STATUS "Building with Address sanitizer")
-            append("-fsanitize=address"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-        elseif (USE_SANITIZER MATCHES "([Mm]emory([Ww]ith[Oo]rigins)?)")
-            # Optional: -fno-optimize-sibling-calls -fsanitize-memory-track-origins=2
-            append("-fsanitize=memory"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-            if (USE_SANITIZER MATCHES "([Mm]emory[Ww]ith[Oo]rigins)")
-                message(STATUS "Building with MemoryWithOrigins sanitizer")
-                append("-fsanitize-memory-track-origins"
-                        CMAKE_EXE_C_FLAGS
-                        CMAKE_EXE_CXX_FLAGS
-                        CMAKE_STATIC_C_FLAGS
-                        CMAKE_STATIC_CXX_FLAGS
-                        CMAKE_EXE_LINKER_FLAGS
-                        CMAKE_MODULE_LINKER_FLAGS)
-            else ()
-                message(STATUS "Building with Memory sanitizer")
-            endif ()
-        elseif (USE_SANITIZER MATCHES "([Uu]ndefined)")
-            message(STATUS "Building with Undefined sanitizer")
-            append("-fsanitize=undefined"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-            if (EXISTS "${BLACKLIST_FILE}")
-                append("-fsanitize-blacklist=${BLACKLIST_FILE}"
-                        CMAKE_EXE_C_FLAGS
-                        CMAKE_EXE_CXX_FLAGS
-                        CMAKE_STATIC_C_FLAGS
-                        CMAKE_STATIC_CXX_FLAGS
-                        CMAKE_EXE_LINKER_FLAGS
-                        CMAKE_MODULE_LINKER_FLAGS)
-            endif ()
-        elseif (USE_SANITIZER MATCHES "([Tt]hread)")
-            message(STATUS "Building with Thread sanitizer")
-            append("-fsanitize=thread"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-        elseif (USE_SANITIZER MATCHES "([Ll]eak)")
-            message(STATUS "Building with Leak sanitizer")
-            append("-fsanitize=leak"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-        else ()
-            message(
-                    FATAL_ERROR "Unsupported value of USE_SANITIZER: ${USE_SANITIZER}")
-        endif ()
-    elseif (MSVC)
-        if (USE_SANITIZER MATCHES "([Aa]ddress)")
-            message(STATUS "Building with Address sanitizer")
-            append("-fsanitize=address"
-                    CMAKE_EXE_C_FLAGS
-                    CMAKE_EXE_CXX_FLAGS
-                    CMAKE_STATIC_C_FLAGS
-                    CMAKE_STATIC_CXX_FLAGS
-                    CMAKE_EXE_LINKER_FLAGS
-                    CMAKE_MODULE_LINKER_FLAGS)
-        else ()
-            message(
-                    FATAL_ERROR
-                    "This sanitizer is not yet supported in the MSVC environment: ${USE_SANITIZER}"
-            )
-        endif ()
-    else ()
-        message(FATAL_ERROR "USE_SANITIZER is not supported on this platform.")
-    endif ()
+    if(USE_SANITIZER MATCHES "([Aa]ddress);([Uu]ndefined)"
+       OR USE_SANITIZER MATCHES "([Uu]ndefined);([Aa]ddress)")
+      message(STATUS "Building with Address, Undefined sanitizers")
+      append(
+        "-fsanitize=address,undefined"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+    elseif(USE_SANITIZER MATCHES "([Aa]ddress)")
+      # Optional: -fno-optimize-sibling-calls -fsanitize-address-use-after-scope
+      message(STATUS "Building with Address sanitizer")
+      append(
+        "-fsanitize=address"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+    elseif(USE_SANITIZER MATCHES "([Mm]emory([Ww]ith[Oo]rigins)?)")
+      # Optional: -fno-optimize-sibling-calls -fsanitize-memory-track-origins=2
+      append(
+        "-fsanitize=memory"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+      if(USE_SANITIZER MATCHES "([Mm]emory[Ww]ith[Oo]rigins)")
+        message(STATUS "Building with MemoryWithOrigins sanitizer")
+        append(
+          "-fsanitize-memory-track-origins"
+          CMAKE_EXE_C_FLAGS
+          CMAKE_EXE_CXX_FLAGS
+          CMAKE_STATIC_C_FLAGS
+          CMAKE_STATIC_CXX_FLAGS
+          CMAKE_EXE_LINKER_FLAGS
+          CMAKE_MODULE_LINKER_FLAGS)
+      else()
+        message(STATUS "Building with Memory sanitizer")
+      endif()
+    elseif(USE_SANITIZER MATCHES "([Uu]ndefined)")
+      message(STATUS "Building with Undefined sanitizer")
+      append(
+        "-fsanitize=undefined"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+      if(EXISTS "${BLACKLIST_FILE}")
+        append(
+          "-fsanitize-blacklist=${BLACKLIST_FILE}"
+          CMAKE_EXE_C_FLAGS
+          CMAKE_EXE_CXX_FLAGS
+          CMAKE_STATIC_C_FLAGS
+          CMAKE_STATIC_CXX_FLAGS
+          CMAKE_EXE_LINKER_FLAGS
+          CMAKE_MODULE_LINKER_FLAGS)
+      endif()
+    elseif(USE_SANITIZER MATCHES "([Tt]hread)")
+      message(STATUS "Building with Thread sanitizer")
+      append(
+        "-fsanitize=thread"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+    elseif(USE_SANITIZER MATCHES "([Ll]eak)")
+      message(STATUS "Building with Leak sanitizer")
+      append(
+        "-fsanitize=leak"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+    else()
+      message(
+        FATAL_ERROR "Unsupported value of USE_SANITIZER: ${USE_SANITIZER}")
+    endif()
+  elseif(MSVC)
+    if(USE_SANITIZER MATCHES "([Aa]ddress)")
+      message(STATUS "Building with Address sanitizer")
+      append(
+        "-fsanitize=address"
+        CMAKE_EXE_C_FLAGS
+        CMAKE_EXE_CXX_FLAGS
+        CMAKE_STATIC_C_FLAGS
+        CMAKE_STATIC_CXX_FLAGS
+        CMAKE_EXE_LINKER_FLAGS
+        CMAKE_MODULE_LINKER_FLAGS)
+    else()
+      message(
+        FATAL_ERROR
+          "This sanitizer is not yet supported in the MSVC environment: ${USE_SANITIZER}"
+      )
+    endif()
+  else()
+    message(FATAL_ERROR "USE_SANITIZER is not supported on this platform.")
+  endif()
 
-endif ()
+endif()

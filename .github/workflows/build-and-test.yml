@@ -63,4 +63,3 @@ jobs:
           cd $GITHUB_WORKSPACE/mlir-standalone-template/build
           cmake $GITHUB_WORKSPACE/mlir-standalone-template -DCMAKE_BUILD_TYPE=Release ${{ env.CMAKE_FLAGS }}
           cmake --build . --target check-standalone-opt -- -j$(nproc)
-
