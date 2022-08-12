@@ -1,4 +1,7 @@
 {
+    // use env
+    // https://github.com/gglin001/Dockerfiles/blob/master/mlir/Dockerfile
+    // https://apt.llvm.org
     "cmake.configureSettings": {
         // "CMAKE_PREFIX_PATH": "/opt/conda/envs/py38",
         // "CMAKE_SYSROOT": "/opt/conda/envs/py38/x86_64-conda-linux-gnu/sysroot",
@@ -7,8 +10,11 @@
         "MLIR_DIR": "/usr/lib/llvm-16/lib/cmake/mlir",
         "LLVM_EXTERNAL_LIT": "/opt/conda/envs/py38/bin/lit",
     },
-    "clangd.path": "/usr/bin/clangd-16",
     "terminal.integrated.env.linux": {
         "PATH": "${workspaceFolder}/build/bin:${env:PATH}",
     },
+    "clangd.path": "/usr/bin/clangd-16",
+    "mlir.server_path": "/usr/bin/mlir-lsp-server-16",
+    "mlir.pdll_server_path": "/usr/bin/mlir-pdll-lsp-server-16",
+    "mlir.tablegen_server_path": "/usr/bin/tblgen-lsp-server-16",
 }
