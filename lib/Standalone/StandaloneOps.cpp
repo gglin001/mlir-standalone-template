@@ -12,3 +12,21 @@
 
 #define GET_OP_CLASSES
 #include "Standalone/StandaloneOps.cpp.inc"
+
+using namespace mlir;
+using namespace mlir::standalone;
+
+/*
+void AddOp::getCanonicalizationPatterns(::mlir::RewritePatternSet &results,
+                                        ::mlir::MLIRContext *context) {}
+
+::mlir::OpFoldResult AddOp::fold(::llvm::ArrayRef<::mlir::Attribute> operands) {
+  return nullptr;
+}
+
+::mlir::ParseResult AddOp::parse(::mlir::OpAsmParser &parser,
+                                 ::mlir::OperationState &result) {
+  return success();
+}
+void AddOp::print(::mlir::OpAsmPrinter &p) {}
+*/

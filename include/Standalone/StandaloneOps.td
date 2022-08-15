@@ -14,6 +14,7 @@ include "StandaloneTypes.td"
 include "/mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 
+/*
 def Standalone_FooOp : Standalone_Op<"foo", [NoSideEffect,
                                              SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
@@ -58,6 +59,7 @@ def Standalone_Foo2Op : Standalone_Op<"foo2", [NoSideEffect,
         $input attr-dict `:` type($input)
     }];
 }
+*/
 
 def Standalone_AddOp : Standalone_Op<"add", [NoSideEffect]> {
     let summary = "Illustrates how to define an operation.";
@@ -74,6 +76,10 @@ def Standalone_AddOp : Standalone_Op<"add", [NoSideEffect]> {
     let assemblyFormat = [{
         $x $y attr-dict `:` functional-type(operands, results)
     }];
+
+    // let hasFolder = 1;
+    // let hasCanonicalizer = 1;
+    // let hasCustomAssemblyFormat = 1;
 }
 
 #endif // STANDALONE_OPS

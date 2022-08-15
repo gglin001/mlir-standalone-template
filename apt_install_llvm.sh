@@ -16,3 +16,4 @@ apt-get install clang-format clang-tidy clang-tools clang clangd libc++-dev \
 
 # mlir
 apt-get install libmlir-16-dev mlir-16-tools
+apt-get install clang-tools-16
