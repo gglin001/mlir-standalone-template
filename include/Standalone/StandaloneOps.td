@@ -14,7 +14,6 @@ include "StandaloneTypes.td"
 include "/mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 
-/*
 def Standalone_FooOp : Standalone_Op<"foo", [Pure,
                                              SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
@@ -43,7 +42,7 @@ def Standalone_FooOp : Standalone_Op<"foo", [Pure,
 }
 
 def Standalone_Foo2Op : Standalone_Op<"foo2", [Pure,
-                                             SameOperandsAndResultType]> {
+                                               SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
     let description = [{
         ```mlir
@@ -59,7 +58,6 @@ def Standalone_Foo2Op : Standalone_Op<"foo2", [Pure,
         $input attr-dict `:` type($input)
     }];
 }
-*/
 
 def Standalone_AddOp : Standalone_Op<"add", [Pure]> {
     let summary = "Illustrates how to define an operation.";
