@@ -12,6 +12,7 @@
     "esbenp.prettier-vscode",
     "llvm-vs-code-extensions.vscode-mlir",
     "jakob-erzar.llvm-tablegen",
-    "RReverser.llvm",
+    "rreverser.llvm",
+    "foxundermoon.shell-format"
   ]
 }
