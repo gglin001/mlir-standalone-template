@@ -1,4 +1,4 @@
-// RUN: standalone-opt %s | standalone-opt | FileCheck %s
+// RUN: standalone-opt %s | FileCheck %s
 
 module {
     // CHECK-LABEL: func @bar()
