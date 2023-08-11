@@ -15,7 +15,7 @@ include "/mlir/Interfaces/InferTypeOpInterface.td"
 include "mlir/Interfaces/SideEffectInterfaces.td"
 
 /*
-def Standalone_FooOp : Standalone_Op<"foo", [NoSideEffect,
+def Standalone_FooOp : Standalone_Op<"foo", [Pure,
                                              SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
     let description = [{
@@ -42,7 +42,7 @@ def Standalone_FooOp : Standalone_Op<"foo", [NoSideEffect,
     }];
 }
 
-def Standalone_Foo2Op : Standalone_Op<"foo2", [NoSideEffect,
+def Standalone_Foo2Op : Standalone_Op<"foo2", [Pure,
                                              SameOperandsAndResultType]> {
     let summary = "Illustrates how to define an operation.";
     let description = [{
@@ -61,7 +61,7 @@ def Standalone_Foo2Op : Standalone_Op<"foo2", [NoSideEffect,
 }
 */
 
-def Standalone_AddOp : Standalone_Op<"add", [NoSideEffect]> {
+def Standalone_AddOp : Standalone_Op<"add", [Pure]> {
     let summary = "Illustrates how to define an operation.";
     let description = [{
         ```mlir
