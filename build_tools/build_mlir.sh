@@ -50,6 +50,9 @@ cmake -GNinja \
   -DLLVM_BUILD_TOOLS=OFF \
   -DLLVM_INCLUDE_TESTS=OFF \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DLLVM_ENABLE_ASSERTIONS=On
+  -DLLVM_ENABLE_ASSERTIONS=ON \
+  -DCMAKE_INSTALL_PREFIX="$build_dir/install"
 
 cmake --build "$build_dir" --target all
+
+cmake --build "$build_dir" --target install
